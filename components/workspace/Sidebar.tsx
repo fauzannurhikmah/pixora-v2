@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
 import { TOOLS, type ToolId } from './constants';
+import Image from 'next/image';
 
 interface Props {
     activeTool: ToolId;
@@ -21,14 +21,13 @@ export default function Sidebar({ activeTool, onSelect }: Props) {
                 <Link href="/" className="flex items-center gap-2 group w-fit">
                     <div className="relative">
                         <div className="absolute inset-0 rounded-lg bg-indigo-500/50 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <div className="relative w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center">
-                            <Sparkles className="w-3.5 h-3.5 text-white" />
+                        <div className="relative w-7 h-7 rounded-lg overflow-hidden">
+                            <Image src="/icon-v3.PNG" alt="Pixora" width={28} height={28} className="w-full h-full object-cover" />
                         </div>
                     </div>
                     <span className="font-bold text-sm tracking-tight">Pixora</span>
                 </Link>
             </div>
-
             <div className="relative mx-4 h-px bg-white/[0.06]" />
 
             {/* Tool list */}

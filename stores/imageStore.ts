@@ -50,8 +50,9 @@ export const useImageStore = create<ImageState>((set) => ({
             };
             return {
                 images: [...state.images, newImage],
-                activeImage: state.activeImage || newImage,
-                beforeImage: state.beforeImage || preview,
+                activeImage: newImage,
+                beforeImage: preview,
+                afterImage: null,
             };
         }),
 

@@ -1,13 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Sparkles, Command } from 'lucide-react';
+import { Command } from 'lucide-react';
 import CircuitGrid from '@/components/landing/CircuitGrid';
 import MagneticButton from '@/components/landing/MagneticButton';
 import Counter from '@/components/landing/Counter';
 import UploadZone from '@/components/landing/UploadZone';
 import FeatureCards from '@/components/landing/FeatureCards';
 import { STATS } from '@/components/landing/constants';
+import Image from 'next/image';
 
 export default function Landing() {
   return (
@@ -27,8 +28,8 @@ export default function Landing() {
         <div className="flex items-center gap-2 group cursor-pointer">
           <div className="relative">
             <div className="absolute inset-0 rounded-xl bg-indigo-500/40 blur-md group-hover:blur-lg transition-all" />
-            <div className="relative w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-              <Sparkles className="w-4 h-4 text-white" />
+            <div className="relative w-8 h-8 rounded-lg overflow-hidden shadow-lg group-hover:scale-110 transition-transform">
+              <Image src="/icon-v3.PNG" alt="Pixora" width={32} height={32} className="w-full h-full object-cover" />
             </div>
           </div>
           <span className="font-bold text-xl tracking-tight">Pixora</span>
