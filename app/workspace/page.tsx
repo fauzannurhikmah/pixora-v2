@@ -10,20 +10,22 @@ import { ToolId } from '@/components/workspace/constants';
 export default function Workspace() {
     const [activeTool, setActiveTool] = useState<ToolId>('upscale');
     const [isProcessing, setIsProcessing] = useState(false);
-    const [processedUrl, setProcessedUrl] = useState<string | null>(null);
 
-    const { images } = useImageStore();
-    const imageUrl = images[0]?.url ?? null;
+    const { activeImage, afterImage, setAfterImage, addImage, setActiveImage } = useImageStore();
 
     const handleProcess = useCallback(() => {
+        if (!activeImage) return;
         setIsProcessing(true);
-        setProcessedUrl(null);
-        // Replace timeout with real API call
+        setAfterImage('');
         setTimeout(() => {
             setIsProcessing(false);
-            setProcessedUrl(imageUrl);
+            setAfterImage(activeImage.preview);
         }, 2500);
-    }, [imageUrl]);
+    }, [activeImage, setAfterImage]);
+
+    const handleReplaceImage = useCallback((file: File) => {
+        addImage(file);
+    }, [addImage]);
 
     return (
         <div className="min-h-screen w-full bg-mesh flex overflow-hidden">
@@ -34,7 +36,12 @@ export default function Workspace() {
             </div>
 
             <Sidebar activeTool={activeTool} onSelect={setActiveTool} />
-            <PreviewArea imageUrl={imageUrl} processedUrl={processedUrl} isProcessing={isProcessing} />
+            <PreviewArea
+                imageUrl={activeImage?.preview ?? null}
+                processedUrl={afterImage || null}
+                isProcessing={isProcessing}
+                onReplaceImage={handleReplaceImage}
+            />
             <ControlPanel activeTool={activeTool} isProcessing={isProcessing} onProcess={handleProcess} />
         </div>
     );
