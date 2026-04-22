@@ -3,7 +3,7 @@ import type { ToolId } from '@/components/workspace/constants';
 export interface ProcessOptions {
     scale?: '2x' | '4x';
     quality?: number;
-    format?: 'JPG' | 'PNG' | 'WebP' | 'AVIF';
+    format?: 'PNG' | 'JPEG' | 'JPG' | 'WEBP' | 'BMP' | 'TIFF' | 'GIF';
     width?: number;
     height?: number;
     maintain_aspect?: boolean;
@@ -16,7 +16,11 @@ interface ProcessImageInput {
     options?: ProcessOptions;
 }
 
-const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8000').replace(/\/$/, '');
+const API_BASE_URL = (
+    process.env.NEXT_PUBLIC_API_BASE_URL
+    ?? process.env.NEXT_PUBLIC_API_URL
+    ?? 'http://localhost:8000'
+).replace(/\/$/, '');
 
 const ENDPOINTS: Record<ToolId, string> = {
     upscale: '/api/upscale',
