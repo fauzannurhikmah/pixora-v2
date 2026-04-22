@@ -16,6 +16,7 @@ import type { ProcessOptions } from '@/lib/api/imageProcessing';
 export interface PanelProps {
     isProcessing: boolean;
     onProcess: (options?: ProcessOptions) => void | Promise<void>;
+    onPreviewChange?: (previewUrl: string | null) => void;
 }
 
 const PANELS: Record<ToolId, React.ComponentType<PanelProps>> = {
@@ -34,14 +35,14 @@ interface Props {
     activeTool: ToolId;
     isProcessing: boolean;
     onProcess: (options?: ProcessOptions) => void | Promise<void>;
+    onPreviewChange?: (previewUrl: string | null) => void;
 }
 
-export default function ControlPanel({ activeTool, isProcessing, onProcess }: Props) {
+export default function ControlPanel({ activeTool, isProcessing, onProcess, onPreviewChange }: Props) {
     const Panel = PANELS[activeTool];
 
     return (
         <aside className="relative flex flex-col h-screen w-[272px] shrink-0 p-2 z-20">
-            {/* Floating glass panel */}
             <div className="absolute inset-2 rounded-[1.5rem] border border-white/[0.06] bg-white/[0.025] backdrop-blur-xl shadow-2xl pointer-events-none" />
 
             <div className="relative flex-1 overflow-y-auto overflow-x-hidden px-3 pt-4 pb-4">
@@ -54,7 +55,11 @@ export default function ControlPanel({ activeTool, isProcessing, onProcess }: Pr
                         transition={{ duration: 0.18 }}
                         className="h-full"
                     >
-                        <Panel isProcessing={isProcessing} onProcess={onProcess} />
+                        <Panel
+                            isProcessing={isProcessing}
+                            onProcess={onProcess}
+                            onPreviewChange={onPreviewChange}
+                        />
                     </motion.div>
                 </AnimatePresence>
             </div>

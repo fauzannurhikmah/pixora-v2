@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useImageStore } from '@/stores/imageStore';
 import Sidebar from '@/components/workspace/Sidebar';
 import PreviewArea from '@/components/workspace/PreviewArea';
@@ -11,13 +11,21 @@ import { processImage, type ProcessOptions } from '@/lib/api/imageProcessing';
 export default function Workspace() {
     const [activeTool, setActiveTool] = useState<ToolId>('upscale');
     const [isProcessing, setIsProcessing] = useState(false);
+    const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null);
 
     const { activeImage, afterImage, setAfterImage, addImage } = useImageStore();
+
+    useEffect(() => {
+        if (activeTool !== 'compress') {
+            setLocalPreviewUrl(null);
+        }
+    }, [activeTool]);
 
     const handleProcess = useCallback(async (options?: ProcessOptions) => {
         if (!activeImage) return;
 
         setIsProcessing(true);
+        setLocalPreviewUrl(null);
         setAfterImage('');
 
         try {
@@ -36,6 +44,7 @@ export default function Workspace() {
     }, [activeImage, activeTool, setAfterImage]);
 
     const handleReplaceImage = useCallback((file: File) => {
+        setLocalPreviewUrl(null);
         addImage(file);
     }, [addImage]);
 
@@ -49,11 +58,17 @@ export default function Workspace() {
             <Sidebar activeTool={activeTool} onSelect={setActiveTool} />
             <PreviewArea
                 imageUrl={activeImage?.preview ?? null}
-                processedUrl={afterImage || null}
+                processedUrl={localPreviewUrl ?? (afterImage || null)}
+                finalProcessedUrl={afterImage || null}
                 isProcessing={isProcessing}
                 onReplaceImage={handleReplaceImage}
             />
-            <ControlPanel activeTool={activeTool} isProcessing={isProcessing} onProcess={handleProcess} />
+            <ControlPanel
+                activeTool={activeTool}
+                isProcessing={isProcessing}
+                onProcess={handleProcess}
+                onPreviewChange={setLocalPreviewUrl}
+            />
         </div>
     );
 }

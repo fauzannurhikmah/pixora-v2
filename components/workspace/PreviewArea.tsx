@@ -8,6 +8,7 @@ import BeforeAfterSlider from './BeforeAfterSlider';
 interface Props {
     imageUrl: string | null;
     processedUrl: string | null;
+    finalProcessedUrl?: string | null;
     isProcessing: boolean;
     onReplaceImage: (file: File) => void;
 }
@@ -16,7 +17,7 @@ const ZOOM_MIN = 0.25;
 const ZOOM_MAX = 4;
 const ZOOM_STEP = 0.25;
 
-export default function PreviewArea({ imageUrl, processedUrl, isProcessing, onReplaceImage }: Props) {
+export default function PreviewArea({ imageUrl, processedUrl, finalProcessedUrl = null, isProcessing, onReplaceImage }: Props) {
     const [zoom, setZoom] = useState(1);
     const [showComparison, setShowComparison] = useState(false);
     const [isDragOver, setIsDragOver] = useState(false);
@@ -170,11 +171,11 @@ export default function PreviewArea({ imageUrl, processedUrl, isProcessing, onRe
                         </button>
                     </div>
 
-                    {processedUrl && (
+                    {finalProcessedUrl && (
                         <motion.a
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            href={processedUrl}
+                            href={finalProcessedUrl}
                             download
                             className="flex items-center gap-2 px-3 py-1.5 rounded-lg
                 bg-gradient-to-r from-indigo-600 to-purple-600
