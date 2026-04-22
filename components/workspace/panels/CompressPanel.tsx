@@ -44,7 +44,12 @@ export default function CompressPanel({ isProcessing, onProcess }: PanelProps) {
             </PanelSection>
 
             <div className="mt-auto pt-4">
-                <ProcessButton label="Compress Image" isProcessing={isProcessing} onClick={onProcess} gradient="from-amber-600 to-orange-600" />
+                <ProcessButton
+                    label="Compress Image"
+                    isProcessing={isProcessing}
+                    onClick={() => onProcess({ quality })}
+                    gradient="from-amber-600 to-orange-600"
+                />
                 <ProgressBar visible={isProcessing} />
             </div>
         </div>

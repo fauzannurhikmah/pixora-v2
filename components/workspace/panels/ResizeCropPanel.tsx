@@ -113,7 +113,13 @@ export default function ResizeCropPanel({ isProcessing, onProcess }: PanelProps)
                 <ProcessButton
                     label="Resize Image"
                     isProcessing={isProcessing}
-                    onClick={onProcess}
+                    onClick={() =>
+                        onProcess({
+                            width: Number(width),
+                            height: Number(height),
+                            maintain_aspect: locked,
+                        })
+                    }
                     gradient="from-pink-600 to-rose-600"
                 />
                 <ProgressBar visible={isProcessing} />

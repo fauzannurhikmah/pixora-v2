@@ -36,7 +36,11 @@ export default function UpscalePanel({ isProcessing, onProcess }: PanelProps) {
             </PanelSection>
 
             <div className="mt-auto pt-4">
-                <ProcessButton label="Upscale Image" isProcessing={isProcessing} onClick={onProcess} />
+                <ProcessButton
+                    label="Upscale Image"
+                    isProcessing={isProcessing}
+                    onClick={() => onProcess({ scale })}
+                />
                 <ProgressBar visible={isProcessing} />
             </div>
         </div>

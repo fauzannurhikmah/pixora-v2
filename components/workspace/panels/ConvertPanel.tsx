@@ -48,7 +48,7 @@ export default function ConvertPanel({ isProcessing, onProcess }: PanelProps) {
                 <ProcessButton
                     label={`Convert to .${format.toLowerCase()}`}
                     isProcessing={isProcessing}
-                    onClick={onProcess}
+                    onClick={() => onProcess({ format })}
                     gradient="from-violet-600 to-purple-600"
                 />
                 <ProgressBar visible={isProcessing} />

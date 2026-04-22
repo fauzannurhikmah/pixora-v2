@@ -11,10 +11,11 @@ import ResizeCropPanel from './panels/ResizeCropPanel';
 import AutoEnhancePanel from './panels/AutoEnhancePanel';
 import DenoisePanel from './panels/DenoisePanel';
 import BatchPanel from './panels/BatchPanel';
+import type { ProcessOptions } from '@/lib/api/imageProcessing';
 
 export interface PanelProps {
     isProcessing: boolean;
-    onProcess: () => void;
+    onProcess: (options?: ProcessOptions) => void | Promise<void>;
 }
 
 const PANELS: Record<ToolId, React.ComponentType<PanelProps>> = {
@@ -32,7 +33,7 @@ const PANELS: Record<ToolId, React.ComponentType<PanelProps>> = {
 interface Props {
     activeTool: ToolId;
     isProcessing: boolean;
-    onProcess: () => void;
+    onProcess: (options?: ProcessOptions) => void | Promise<void>;
 }
 
 export default function ControlPanel({ activeTool, isProcessing, onProcess }: Props) {

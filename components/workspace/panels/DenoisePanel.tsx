@@ -21,6 +21,22 @@ export default function DenoisePanel({ isProcessing, onProcess }: PanelProps) {
 
     const active = PRESETS.find(p => p.value === intensity);
 
+    const resolveStrength = (): 'low' | 'medium' | 'high' => {
+        if (mode === 'auto') {
+            return 'medium';
+        }
+
+        if (intensity <= 33) {
+            return 'low';
+        }
+
+        if (intensity <= 66) {
+            return 'medium';
+        }
+
+        return 'high';
+    };
+
     return (
         <div className="flex flex-col h-full">
             <PanelHeader title="Denoise" description="Remove grain and noise while retaining sharp detail." />
@@ -78,7 +94,7 @@ export default function DenoisePanel({ isProcessing, onProcess }: PanelProps) {
                 <ProcessButton
                     label="Denoise Image"
                     isProcessing={isProcessing}
-                    onClick={onProcess}
+                    onClick={() => onProcess({ strength: resolveStrength() })}
                     gradient="from-teal-600 to-cyan-600"
                 />
                 <ProgressBar visible={isProcessing} />
